@@ -96,3 +96,23 @@ $(document).ready(function () {
     }
   });
 });
+const popupOverlay = document.getElementById("popupOverlay");
+const popupCloseBtn = document.getElementById("popupCloseBtn");
+const openPopupBtn = document.querySelector(".open-popup-btn");
+
+// Open Popup
+openPopupBtn.addEventListener("click", () => {
+  popupOverlay.style.display = "flex";
+});
+
+// Close Popup on close button
+popupCloseBtn.addEventListener("click", () => {
+  popupOverlay.style.display = "none";
+});
+
+// Close Popup if click outside the popup box
+popupOverlay.addEventListener("click", (event) => {
+  if (event.target === popupOverlay) {
+    popupOverlay.style.display = "none";
+  }
+});

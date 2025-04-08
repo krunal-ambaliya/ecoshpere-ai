@@ -1,0 +1,136 @@
+.open-popup-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Popup Box */
+.popup-box {
+  background: #0c0c25;
+  border-radius: 10px;
+  padding: 20px;
+  width: 600px;
+  position: relative;
+  box-shadow: 0 0 20px #00f;
+  color: white;
+}
+
+/* Header */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-title {
+  margin: 0;
+}
+
+.popup-close-btn {
+  font-size: 24px;
+  cursor: pointer;
+  color: red;
+}
+
+/* Tabs */
+.popup-tabs {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tab-btn {
+  background-color: #111;
+  color: white;
+  border: 1px solid black;
+  padding: 6px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.tab-btn:hover {
+  background-color: #222;
+
+}
+
+.active-tab {
+  background-color: #00f;
+}
+
+/* Content */
+.popup-content {
+  margin-top: 20px;
+}
+
+.popup-subtitle {
+  margin: 0 0 5px;
+}
+
+.popup-label {
+  margin-bottom: 10px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+
+}
+
+.add-btn {
+  background-color: limegreen;
+  color: black;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.add-btn:hover {
+  background-color: green;
+  color: white;
+}
+/* Table */
+.command-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.command-table th,
+.command-table td {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.delete-btn {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.delete-btn:hover {
+  background-color: darkred;
+}

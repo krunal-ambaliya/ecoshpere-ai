@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="assets/vendore/texllate/animate.css">
 
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="./popup.css">
     <link rel="shortcut icon"
         href="./assets/img/png-transparent-jarvis-logo-edwin-jarvis-iron-man-youtube-marvel-cinematic-universe-male-jarvis-ui-comics-superhero-computer-thumbnail.png"
         type="image/x-icon">
@@ -61,9 +61,11 @@
                             <div id="TextInput" class="d-flex">
                                 <input type="text" class="input-field" name="chatbox" id="chatbox"
                                     placeholder="type here...">
-                                <button id="SendBtn" class="glow-on-hover" ><i class="bi bi-send"></i></button>
+                                <button id="SendBtn" class="glow-on-hover"><i class="bi bi-send"></i></button>
                                 <button id="MicBtn" class="glow-on-hover"><i class="bi bi-mic"></i></button>
-                                <button id="ChatBtn" class="glow-on-hover" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-chat-dots"></i></button>
+                                <button id="ChatBtn" class="glow-on-hover" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i
+                                        class="bi bi-chat-dots"></i></button>
                                 <button id="SettingsBtn" class="glow-on-hover"><i class="bi bi-gear"></i></button>
                             </div>
                         </div>
@@ -75,14 +77,15 @@
         </section>
 
         <section id="SiriWave" class="mb-4" hidden>
-            <button id="BackBtn" class="btn btn-light mt-4">Back</button>
+
 
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
                             <div class="">
-                                <p class="text-start text-light mb-4 siri-message"> hello, i am EchoSpear!! your AI assistant </p>
+                                <p class="text-start text-light mb-4 siri-message"> hello, i am EchoSpear!! your AI
+                                    assistant </p>
                                 <div id="siri-container"></div>
                             </div>
 
@@ -92,12 +95,66 @@
             </div>
         </section>
     </div>
+    <!-- Trigger Button -->
+    <button class="open-popup-btn">Open Assistant Settings</button>
+
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-box">
+            <div class="popup-header">
+                <h2 class="popup-title">Assistant Settings</h2>
+                <span class="popup-close-btn" id="popupCloseBtn">&times;</span>
+            </div>
+
+            <div class="popup-tabs">
+                <button class="tab-btn active">Personal</button>
+                <button class="tab-btn active-tab">Commands</button>
+                <button class="tab-btn">Phone Book</button>
+            </div>
+
+            <div class="popup-content">
+                <h4 class="popup-subtitle">System</h4>
+                <p class="popup-label">Add Your New Commands</p>
+                <div class="input-group">
+                    <input type="text" class="input keyword-input" placeholder="Keyword eg: notepad">
+                    <input type="text" class="input path-input" placeholder="Path eg: c:/notepad.exe">
+                    <button class="add-btn">Add</button>
+                </div>
+
+                <table class="command-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Keyword</th>
+                            <th>Path</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>notepad</td>
+                            <td>C:\WINDOWS\system32\notepad.exe</td>
+                            <td><button class="delete-btn">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>edge</td>
+                            <td>C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</td>
+                            <td><button class="delete-btn">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <div class="offcanvas offcanvas-start chat-canvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
         id="offcanvasScrolling" arial-labelledby="offcanvasScrollingLabel">
         <div class="offcanva-header d-flex justify-content-between align-items-center">
             <h5 class="offcanvas-title text-white" id="offcanvasScrollingLabel">Chats</h5>
-            <button type="button" class="btn-close btn-close-white text-reset ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close btn-close-white text-reset ms-auto" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
         </div>
         <div id="chat-canvas-body" class="offcanvas-body">
             <!-- Chatting code here -->
@@ -114,17 +171,17 @@
     <script src="https://ajax.googleapis.com/jax/libs/jquaryui/1.11.2/jquary-ui.min.js"></script>
     <script src="script.js"></script>
 
-    
+
 
     <!-- Texllate js-->
     <script src="assets/vendore/texllate/jquery.fittext.js"></script>
     <script src="assets/vendore/texllate/jquery.lettering.js"></script>
     <script src="http://jschr.github.io/textillate/jquery.textillate.js"></script>
-    
+
     <script src="./eel.js"></script>
     <script src="main.js"></script>
     <script src="controller.js"></script>
-    
+
 </body>
 
 </html>
