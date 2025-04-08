@@ -1,0 +1,2 @@
+cmd command - 1  = Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+                 =  jarvis\Scripts\activate 
