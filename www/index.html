@@ -66,7 +66,7 @@
                                 <button id="ChatBtn" class="glow-on-hover" data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i
                                         class="bi bi-chat-dots"></i></button>
-                                <button id="SettingsBtn" class="glow-on-hover"><i class="bi bi-gear"></i></button>
+                                <button id="SettingsBtn" class="glow-on-hover open-popup-btn" ><i class="bi bi-gear"></i></button>
                             </div>
                         </div>
                     </div>
@@ -75,9 +75,10 @@
                 <div class="col-md-1"></div>
             </div>
         </section>
-
+        <!-- <button onclick="stopSpeech()">Stop Speaking</button> -->
         <section id="SiriWave" class="mb-4" hidden>
 
+            
 
             <div class="container">
                 <div class="row">
@@ -96,7 +97,7 @@
         </section>
     </div>
     <!-- Trigger Button -->
-    <button class="open-popup-btn">Open Assistant Settings</button>
+    <!-- <button class="open-popup-btn" id="popupBtnId">Open Assistant Settings</button> -->
 
     <!-- Popup Overlay -->
     <div class="popup-overlay" id="popupOverlay">
@@ -123,28 +124,18 @@
 
                 <table class="command-table">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Keyword</th>
-                            <th>Path</th>
-                            <th>Delete</th>
-                        </tr>
+                      <tr>
+                        <th>#</th>
+                        <th>Keyword</th>
+                        <th>Path</th>
+                        <th>Delete</th>
+                      </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>notepad</td>
-                            <td>C:\WINDOWS\system32\notepad.exe</td>
-                            <td><button class="delete-btn">Delete</button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>edge</td>
-                            <td>C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</td>
-                            <td><button class="delete-btn">Delete</button></td>
-                        </tr>
+                      <!-- Filled by JS -->
                     </tbody>
-                </table>
+                  </table>
+                  
             </div>
         </div>
     </div>

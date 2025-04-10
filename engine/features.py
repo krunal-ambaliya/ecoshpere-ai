@@ -20,7 +20,9 @@ import pyautogui
 # from hugchat import hugchat
 import google.generativeai as genai
 import os
+# from engine.helper import speak
 
+from engine.db import cursor, conn  # or however you're handling DB (conn)
 conn = sqlite3.connect("EchoSphear.db")
 cursor = conn.cursor()
 
@@ -32,6 +34,31 @@ def playAssistantsound():
     mixer.music.load(music_dir)
     mixer.music.play()
 
+# /--------- db operations START ---- --/
+
+@eel.expose
+def get_commands():
+    cursor.execute("SELECT rowid, * FROM sys_command")
+    rows = cursor.fetchall()
+    return [{"rowid": row[0], "name": row[1], "path": row[2]} for row in rows]
+
+@eel.expose
+def add_command(name, path):
+    if name and path:
+        cursor.execute("INSERT INTO sys_command (name, path) VALUES (?, ?)", (name, path))
+        conn.commit()
+        return True
+    return False
+
+@eel.expose
+def delete_command(cmd_id):
+    cursor.execute("DELETE FROM sys_command WHERE rowid = ?", (cmd_id,))
+    conn.commit()
+    return True
+
+
+# /--------- db operations  END ------/
+
 
 def openCommand(query):
     query = query.replace(ASSISTANT_NAME, "")
@@ -41,34 +68,36 @@ def openCommand(query):
     app_name = query.strip()
 
     if app_name != "":
-
         try:
-            
             cursor.execute('SELECT path FROM sys_command WHERE name = ?', (app_name,))
             results = cursor.fetchall()
 
             if len(results) != 0:
-                speak("Opening "+query)
+                speak("Opening " + app_name)
                 os.startfile(results[0][0])
+                return
 
-            elif len(results) == 0: 
-                cursor.execute('SELECT url FROM web_command WHERE name = ?', (app_name,))
+            cursor.execute('SELECT url FROM web_command WHERE name = ?', (app_name,))
+            results = cursor.fetchall()
 
-                results = cursor.fetchall()
-                
-                if len(results) != 0:
-                    speak("Opening "+query)
-                    webbrowser.open(results[0][0])
+            if len(results) != 0:
+                speak("Opening " + app_name)
+                webbrowser.open(results[0][0])
+                return
 
-                else:
-                    speak("Opening "+query)
-                    try:
-                        os.system('start '+query)
-                    except:
-                        speak("not found")
+            # If not found in either, try generic OS start
+            try:
+                os.system('start ' + app_name)
+                speak("Trying to open " + app_name)
+            except:
+                speak("Application not found.")
+
         except Exception as e:
-            speak(f"Something went wrong: {e}")
+            speak("Something went wrong.")
             print(f"Error: {e}")
+    else:
+        speak("No application name provided.")
+
     
 def PlayYoutube(query):
     search_term = extract_yt_term(query)

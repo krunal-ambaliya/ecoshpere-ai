@@ -57,7 +57,7 @@ $(document).ready(function () {
   document.addEventListener("keyup", doc_keyUp, false);
 
   // to play assisatnt
-  function PlayAssistant(message) {
+  function playAssistant(message) {
     if (message != "") {
       $("#Oval").attr("hidden", true);
       $("#SiriWave").attr("hidden", false);
@@ -110,9 +110,72 @@ popupCloseBtn.addEventListener("click", () => {
   popupOverlay.style.display = "none";
 });
 
-// Close Popup if click outside the popup box
-popupOverlay.addEventListener("click", (event) => {
-  if (event.target === popupOverlay) {
-    popupOverlay.style.display = "none";
+// // Close Popup if click outside the popup box
+// popupOverlay.addEventListener("click", (event) => {
+//   if (event.target === popupOverlay) {
+//     popupOverlay.style.display = "none";
+//   }
+// });
+
+
+
+const keywordInput = document.querySelector('.keyword-input');
+const pathInput = document.querySelector('.path-input');
+const addBtn = document.querySelector('.add-btn');
+const commandTableBody = document.querySelector('.command-table tbody');
+
+window.onload = loadCommands;
+
+async function loadCommands() {
+  const data = await eel.get_commands()();
+  commandTableBody.innerHTML = '';
+  data.forEach((cmd, index) => {
+    const row = `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${cmd.name}</td>
+        <td>${cmd.path}</td>
+        <td><button class="delete-btn" onclick="deleteCommand(${cmd.rowid})">Delete</button></td>
+      </tr>
+    `;
+    commandTableBody.innerHTML += row;
+  });
+}
+
+addBtn.addEventListener('click', async () => {
+  const keyword = keywordInput.value.trim();
+  const path = pathInput.value.trim();
+  if (!keyword || !path) {
+    alert('Both fields are required');
+    return;
+  }
+
+  const success = await eel.add_command(keyword, path)();
+  if (success) {
+    keywordInput.value = '';
+    pathInput.value = '';
+    loadCommands();
+  } else {
+    alert('Failed to add command');
   }
 });
+
+async function deleteCommand(id) {
+  const success = await eel.delete_command(id)();
+  if (success) {
+    loadCommands();
+  } else {
+    alert('Failed to delete command');
+  }
+}
+
+// Calls Python to stop speaking
+
+// function stopSpeech() {
+//   try {
+//     eel.stopSpeaking()(); // <- Note the double parentheses to call the async exposed function
+//     console.log("Speech stopped successfully.");
+//   } catch (error) {
+//     console.error("Error stopping speech:", error);
+//   }
+// }

@@ -1,48 +1,58 @@
-import eel
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 import sqlite3
+import os
 
-# Initialize Eel with the folder containing web files
-# eel.init('web')
+app = Flask(__name__, static_folder='www', static_url_path='')
+CORS(app)
 
-# Connect to SQLite database
-conn = sqlite3.connect('EchoSphear.db', check_same_thread=False)
-cursor = conn.cursor()
+DB = 'EchoSphear.db'
 
-# Create the table if it does not exist
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS sys_command (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        path TEXT NOT NULL
-    )
-''')
-conn.commit()
+def get_db():
+    conn = sqlite3.connect(DB)
+    conn.row_factory = sqlite3.Row
+    return conn
 
-# Function to add a command to the database
-@eel.expose
-def add_command(name, path):
-    try:
-        cursor.execute("INSERT INTO sys_command (name, path) VALUES (?, ?)", (name, path))
-        conn.commit()
-        return "Command added successfully!"
-    except Exception as e:
-        return f"Error: {e}"
+# Serve the frontend (index.html, CSS, JS)
+@app.route('/')
+def serve_index():
+    return send_from_directory(app.static_folder, 'index.html')
 
-# Function to fetch all commands
-@eel.expose
+# Fetch all commands
+@app.route('/commands', methods=['GET'])
 def get_commands():
-    cursor.execute("SELECT * FROM sys_command")
-    return cursor.fetchall()
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT rowid, * FROM sys_command")
+    rows = cursor.fetchall()
+    conn.close()
+    return jsonify([dict(row) for row in rows])
 
-# Function to delete a command
-@eel.expose
+# Add new command
+@app.route('/add-command', methods=['POST'])
+def add_command():
+    data = request.json
+    name = data.get('name')
+    path = data.get('path')
+    if not name or not path:
+        return jsonify({"error": "Missing data"}), 400
+
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO sys_command (name, path) VALUES (?, ?)", (name, path))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Command added"}), 201
+
+# Delete a command
+@app.route('/delete-command/<int:cmd_id>', methods=['DELETE'])
 def delete_command(cmd_id):
-    try:
-        cursor.execute("DELETE FROM sys_command WHERE id = ?", (cmd_id,))
-        conn.commit()
-        return "Command deleted successfully!"
-    except Exception as e:
-        return f"Error: {e}"
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM sys_command WHERE rowid = ?", (cmd_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Command deleted"}), 200
 
-# Start the Eel app
-eel.start('ex.html', size=(800, 600))
+if __name__ == '__main__':
+    app.run(debug=True)

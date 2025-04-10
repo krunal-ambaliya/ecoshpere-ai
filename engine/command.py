@@ -5,19 +5,26 @@ import time
 import threading
 
 
-engine = None  # Global engine
+engine = pyttsx3.init('sapi5')  # Global engine instance
 engine_lock = threading.Lock()
 
 def speak(text):
+    global engine
     text = str(text)
-    engine = pyttsx3.init('sapi5')
-    voices = engine.getProperty('voices')
     engine.setProperty('rate', 174)
     eel.DisplayMessage(text)
     engine.say(text)
     eel.receiverText(text)
     engine.runAndWait()
 
+
+# @eel.expose
+# def stopSpeaking():
+#     global engine
+#     try:
+#         engine.stop()
+#     except Exception as e:
+#         print(f"[ERROR] Stopping engine: {e}")
 
 
 def takecommand():

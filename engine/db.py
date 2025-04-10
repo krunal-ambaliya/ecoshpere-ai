@@ -1,7 +1,7 @@
 import sqlite3
 import csv
 # Connect to the database
-conn = sqlite3.connect("EchoSphear.db")
+conn = sqlite3.connect("EchoSphear.db", check_same_thread=False)
 cursor = conn.cursor()
 
 
