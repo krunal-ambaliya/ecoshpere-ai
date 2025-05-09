@@ -129,7 +129,7 @@ def hotword():
     try:
         
         # Replace 'YOUR_ACCESS_KEY' with your actual access key
-        access_key = "bt6Nlo8P44kTKDoljvDbFEZchHdy5n2cS6W708K6VpX9nVX4cfpH1Q=="
+        access_key = "keyhere"
         keyword_paths = r".\\hey-sphear_en_windows_v3_0_0.ppn"
         porcupine = pvporcupine.create(
             access_key=access_key, 
@@ -265,7 +265,7 @@ def chatBot(query):
 
     try:
         # Configure Gemini API key
-        genai.configure(api_key="AIzaSyBafI6ozxGzlisQxPITBs_vjKRxgI6ZwYs")
+        genai.configure(api_key="keyhere")
 
         # Initialize the model
         model = genai.GenerativeModel('gemini-1.5-pro-latest') #gemini-1.5-flash
